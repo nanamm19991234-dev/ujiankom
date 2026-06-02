@@ -1,0 +1,40 @@
+A. Instruksi Umum
+Kalian adalah tim Internet of Things (IoT) Engineer yang ditugaskan untuk menerapkan dan mengembangkan sistem monitoring suhu, cahaya, dan kontrol perangkat di sebuah fasilitas. Kode dasar sistem ini telah disiapkan di repositori GitHub resmi penguji. Tugas kalian adalah melakukan fork dan clone pada repositori tersebut, menganalisis cara kerjanya, memperbaiki celah yang ada, serta menambahkan fitur baru secara kolaboratif.
+Selain sistem monitoring, kalian juga diminta menambahkan fitur kontrol relay otomatis dan manual sebagai bagian dari pengembangan sistem IoT. Relay digunakan untuk mengendalikan perangkat elektronik seperti lampu, kipas, atau alarm berdasarkan kondisi sensor maupun perintah pengguna.
+
+fitur baru secara kolaboratif.
+Tautan Repositori GitHub: https://github.com/Zalswaw/soalujikomIOT2026
+Tautan Berkas & Ekstensi makecode ): https://drive.google.com/drive/folders/1S3ibRtKOfUIwMbDbEWJY92SdwnO8cn5m?usp=sharing
+Link pengumpulan https://bit.ly/ujikomiot2026
+
+B. Kebutuhan Perangkat Lunak (Software)
+Sebelum memulai pengerjaan, pastikan setiap komputer atau laptop yang digunakan oleh kelompok telah terinstal dan memiliki akses ke perangkat lunak berikut:
+Git & GitHub: Git Bash atau Command Prompt untuk pengelolaan versi lokal, serta akun GitHub aktif untuk proses fork, clone, dan commit.
+Web Server Lokal (XAMPP): Digunakan untuk menjalankan modul Apache dan mengeksekusi file PHP yang bertindak sebagai jembatan (API Bridge) lokal.
+Text Editor / Code Editor: Visual Studio Code (VS Code), Sublime Text, atau sejenisnya untuk memodifikasi file HTML, CSS, JavaScript, dan PHP.
+MakeCode for micro:bit: Akses platform melalui web browser untuk memprogram logika perangkat keras dan menyisipkan ekstensi kustom.
+Firebase Console: Akses platform cloud untuk mengonfigurasi Firebase Authentication dan Realtime Database.
+Web Browser: Google Chrome atau Microsoft Edge untuk membuka dashboard monitoring dan menguji sistem.
+
+C. Aturan Wajib Kolaborasi (GitHub Workflow)
+Untuk memastikan kerja sama tim berjalan dengan baik, standar pengembangan terpenuhi, dan proses penilaian dapat dilakukan, setiap kelompok wajib mematuhi aturan repositori berikut:
+Wajib Membaca README: Sebelum menulis atau mengubah baris kode apa pun, setiap anggota kelompok diwajibkan membaca seluruh panduan, spesifikasi pin, dan instruksi teknis yang tertulis di file README.md pada repositori.
+Clone, Fork & Invite: Ketua kelompok bertugas melakukan Fork dari repositori utama, lalu melakukan Clone ke komputer lokal. Setelah itu, ketua wajib mengundang seluruh anggota kelompoknya sebagai Collaborator di repositori tersebut.
+Wajib Menambahkan Penguji: Ketua kelompok wajib menambahkan username GitHub penguji yaitu Zalswaw ke dalam daftar Collaborator repositori. Jika langkah ini dilewatkan, maka proyek kelompok dianggap tidak sah dan tidak akan dinilai.
+Distribusi Commit: Setiap anggota kelompok wajib memiliki minimal 2 commit yang tercatat secara sah di riwayat GitHub. Kelompok yang riwayat commit-nya hanya didominasi oleh satu orang akan mendapatkan pengurangan nilai secara signifikan karena terindikasi tidak ada kerja sama tim.
+Pesan Commit yang Jelas: Gunakan pesan commit yang deskriptif dan profesional untuk mempermudah pelacakan modifikasi. Contoh yang benar: feat: menambahkan peringatan suhu tinggi di dashboard.js. Contoh yang salah: update file atau benerin error.
+Contoh logika relay:
+Jika suhu > 30°C → relay menyalakan kipas.
+Jika cahaya gelap → relay menyalakan lampu otomatis.
+Relay juga dapat dikontrol manual melalui dashboard/web.
+Output yang diharapkan:
+Sistem monitoring berjalan realtime.
+Relay dapat dikontrol otomatis maupun manual.
+Repository GitHub berisi histori pengembangan tim.
+Dokumentasi penggunaan sistem dan pembagian tugas anggota tim.
+D. Soal Analisis & Pemecahan Masalah (HOTS)
+Pembagian tugas dalam soal ini mewajibkan siswa untuk tidak hanya menyalin kode, melainkan menganalisis arsitektur sistem yang ada serta melakukan modifikasi secara mendalam.
+Bagian 1: Analisis Arsitektur (Dikerjakan Anggota A)
+Arsitektur sistem ini tidak mengirimkan data secara langsung dari modul ESP8266 ke Firebase, melainkan menggunakan file iot.php di web server lokal (XAMPP) sebagai perantara (bridge).
+Pertanyaan: Mengapa sistem ini membutuhkan file iot.php sebagai jembatan? Analisislah apa yang akan terjadi jika micro:bit dan ESP8266 dipaksa untuk mengirimkan data secara langsung ke URL Firebase Realtime Database menggunakan ekstensi MakeCode yang tersedia saat ini!
+Tugas Praktik: Tambahkan komentar penjelas (code documentation) di dalam file iot.php mengenai fungsi baris kode penangkap parameter URL, lalu lakukan Commit dan Push.
