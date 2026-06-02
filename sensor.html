@@ -43,22 +43,22 @@
         <div class="stat-card gradient-1">
           <small>Suhu</small>
           <h2 id="statSuhu">--°C</h2>
-          <span class="trend up">↑ Stabil</span>
+          <span id="trendSuhu" class="trend up">↑ Stabil</span>
         </div>
         <div class="stat-card gradient-2">
           <small>Kelembapan</small>
           <h2 id="statKelembapan">--%</h2>
-          <span class="trend up">↑ Normal</span>
+          <span id="trendKelembapan" class="trend up">↑ Normal</span>
         </div>
         <div class="stat-card gradient-3">
           <small>Tekanan</small>
           <h2 id="statTekanan">-- hPa</h2>
-          <span class="trend down">↓ Turun tipis</span>
+          <span id="trendTekanan" class="trend down">↓ Turun tipis</span>
         </div>
         <div class="stat-card gradient-4">
           <small>Cahaya</small>
           <h2 id="statCahaya">-- lx</h2>
-          <span class="trend up">↑ Cerah</span>
+          <span id="trendCahaya" class="trend up">↑ Cerah</span>
         </div>
       </section>
 
@@ -91,7 +91,7 @@
   <script type="module" src="js/dashboard.js"></script>
   <script>
     // Isi tabel sensor dari data dummy / Firebase
-    function populateSensorTable(data) {
+    window.populateSensorTable = function(data) {
       const tbody = document.getElementById('sensorTable');
       const now = new Date().toLocaleTimeString('id-ID');
       const sensors = [
@@ -110,16 +110,9 @@
           <td><span class="badge-pill ${s.status === 'OK' ? 'ok' : 'err'}">${s.status}</span></td>
         </tr>
       `).join('');
-    }
 
     // Load dummy data sebagai fallback
-    fetch('data/dummy.json').then(r => r.json()).then(data => {
-      populateSensorTable(data);
-      document.getElementById('statSuhu').textContent = (data.suhu ?? '--') + '°C';
-      document.getElementById('statKelembapan').textContent = (data.kelembapan ?? '--') + '%';
-      document.getElementById('statTekanan').textContent = (data.tekanan ?? '--') + ' hPa';
-      document.getElementById('statCahaya').textContent = (data.cahaya ?? '--') + ' lx';
-    }).catch(() => {});
+    };
   </script>
 </body>
 </html>
