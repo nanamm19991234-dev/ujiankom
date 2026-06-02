@@ -29,6 +29,7 @@ onValue(sensorRef, (snapshot) => {
   // Teruskan ke chart
   window.__sensorData = data;
   if (window.renderChart) window.renderChart(data.chart);
+  if (window.populateSensorTable) window.populateSensorTable(data);
 }, () => loadDummy());
 
 function updateStats(data) {
@@ -72,7 +73,10 @@ function updateStats(data) {
 }
 
 function updateTable(rows) {
-  const tbody = document.getElementById('dataTable');
+  const tbody = document.getElementById('dataTable') || document.getElementById('historyTable');
+  const rowCount = document.getElementById('rowCount');
+  
+  if (rowCount) rowCount.textContent = `${rows.length} entri`;
   if (!tbody) return;
   
   // Create a reversed copy so newest logs appear at the top
