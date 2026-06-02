@@ -14,7 +14,7 @@ document.getElementById('logoutBtn')?.addEventListener('click', async (e) => {
 });
 
 // ====================================
-// SENSOR DATA — hanya Suhu & Cahaya
+// SENSOR DATA
 // ====================================
 const sensorRef = ref(db, 'sensor');
 
@@ -49,12 +49,36 @@ function updateStats(data) {
     trendCahaya.textContent = cahaya > 400 ? '↑ Terang' : cahaya > 100 ? '↑ Redup' : '↓ Gelap';
     trendCahaya.className = 'trend ' + (cahaya > 100 ? 'up' : 'down');
   }
+
+  // Kelembapan
+  const kelembapan = data.kelembapan ?? '--';
+  const elKelembapan = document.getElementById('statKelembapan');
+  if (elKelembapan) elKelembapan.textContent = kelembapan + '%';
+  const trendKelembapan = document.getElementById('trendKelembapan');
+  if (trendKelembapan && kelembapan !== '--') {
+    trendKelembapan.textContent = kelembapan > 80 ? '↑ Lembab' : kelembapan > 40 ? '↑ Normal' : '↓ Kering';
+    trendKelembapan.className = 'trend ' + (kelembapan > 80 ? 'down' : 'up');
+  }
+
+  // Tekanan
+  const tekanan = data.tekanan ?? '--';
+  const elTekanan = document.getElementById('statTekanan');
+  if (elTekanan) elTekanan.textContent = tekanan + ' hPa';
+  const trendTekanan = document.getElementById('trendTekanan');
+  if (trendTekanan && tekanan !== '--') {
+    trendTekanan.textContent = tekanan > 1020 ? '↑ Tinggi' : tekanan > 1000 ? '↑ Normal' : '↓ Rendah';
+    trendTekanan.className = 'trend ' + (tekanan > 1000 ? 'up' : 'down');
+  }
 }
 
 function updateTable(rows) {
   const tbody = document.getElementById('dataTable');
   if (!tbody) return;
-  tbody.innerHTML = rows.map(r => `
+  
+  // Create a reversed copy so newest logs appear at the top
+  const reversedRows = rows.slice().reverse();
+
+  tbody.innerHTML = reversedRows.map(r => `
     <tr>
       <td>${r.waktu}</td>
       <td>${r.sensor}</td>
@@ -62,6 +86,19 @@ function updateTable(rows) {
       <td><span class="badge-pill ${r.status === 'OK' ? 'ok' : r.status === 'WARN' ? 'warn' : 'err'}">${r.status}</span></td>
     </tr>
   `).join('');
+
+  // Update Activity List (Top 4 latest)
+  const activityList = document.getElementById('activityList');
+  if (activityList) {
+    if (reversedRows.length === 0) {
+      activityList.innerHTML = '<li><small>Belum ada aktivitas</small></li>';
+    } else {
+      activityList.innerHTML = reversedRows.slice(0, 4).map(r => {
+        let dotClass = r.status === 'OK' ? 'online' : r.status === 'WARN' ? 'warn' : 'off';
+        return `<li><span class="dot ${dotClass}"></span> ${r.sensor} ${r.nilai} <small>${r.waktu}</small></li>`;
+      }).join('');
+    }
+  }
 }
 
 // Fallback ke dummy.json
