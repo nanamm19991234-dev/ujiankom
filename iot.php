@@ -20,7 +20,7 @@ define('FIREBASE_DB_URL', 'https://ujikom-iot-2026-89010-default-rtdb.asia-south
 // Database Secret (Legacy Token) — Ambil dari:
 // Firebase Console → Project Settings → Service Accounts → Database Secrets → Show
 // ATAU: atur Firebase Rules ke public write untuk testing (lihat README)
-define('FIREBASE_SECRET', '');   // <-- Isi jika menggunakan autentikasi
+define('FIREBASE_SECRET', '995V64F7x6G4Fh93qV9R9l0P9e6V6R6V9');   // <-- Isi jika menggunakan autentikasi
 
 // Jumlah maksimum entri riwayat yang disimpan di Firebase
 define('MAX_HISTORY', 50);
