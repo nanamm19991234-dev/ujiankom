@@ -71,10 +71,10 @@
         <span>Monitoring<strong>IoT</strong></span>
       </div>
       <nav class="sidebar-nav">
-        <a href="dashboard.html" class="active">📊 Dashboard</a>
-        <a href="#">🌡 Sensor</a>
-        <a href="#">📈 Riwayat</a>
-        <a href="#">⚙ Pengaturan</a>
+        <a href="dashboard.html" id="nav-dashboard" class="active">📊 Dashboard</a>
+        <a href="sensor.html" id="nav-sensor">🌡 Sensor</a>
+        <a href="riwayat.html" id="nav-riwayat">📈 Riwayat</a>
+        <a href="pengaturan.html" id="nav-pengaturan">⚙ Pengaturan</a>
         <a href="#" id="logoutBtn" class="logout">↩ Keluar</a>
       </nav>
     </aside>
@@ -92,12 +92,22 @@
         </div>
       </header>
 
-      <!-- Stats: hanya Suhu & Cahaya -->
-      <section class="stats-grid" style="grid-template-columns: repeat(2, 1fr);">
+      <!-- Stats -->
+      <section class="stats-grid">
         <div class="stat-card gradient-1">
           <small>🌡 Suhu</small>
           <h2 id="statSuhu">--°C</h2>
           <span class="trend up" id="trendSuhu">↑ Memuat...</span>
+        </div>
+        <div class="stat-card gradient-2">
+          <small>💧 Kelembapan</small>
+          <h2 id="statKelembapan">--%</h2>
+          <span class="trend up" id="trendKelembapan">↑ Memuat...</span>
+        </div>
+        <div class="stat-card gradient-3">
+          <small>🌪 Tekanan</small>
+          <h2 id="statTekanan">-- hPa</h2>
+          <span class="trend up" id="trendTekanan">↑ Memuat...</span>
         </div>
         <div class="stat-card gradient-4">
           <small>☀️ Cahaya</small>
