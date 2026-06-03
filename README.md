@@ -221,6 +221,27 @@ monitoring-firebase/
 
 ---
 
+## 🚀 Perbaikan Bug dan Peningkatan (Upgrades) dari Versi Asli
+
+Repositori ini telah disempurnakan dan diperbaiki dari versi aslinya ([Zalswaw/soalujikomIOT2026](https://github.com/Zalswaw/soalujikomIOT2026)). Berikut adalah daftar lengkap perubahan yang dilakukan:
+
+### 🐛 Perbaikan Bug (Bug Fixes)
+1. **Redirect Login Gagal (404 Error):** Pada versi asli di file `js/auth.js`, setelah login sukses pengguna diarahkan ke halaman yang salah akibat typo (`dashbord.html`). Bug ini telah diperbaiki menjadi `dashboard.html`.
+2. **Form Login Tidak Berfungsi:** Pada file `login.html`, atribut ID untuk input email awalnya salah penamaan (`id="username"`). Hal ini membuat fungsi JavaScript gagal mengambil nilai email. Telah diperbaiki menjadi `id="email"`.
+3. **Crash Saat Parsing Data Riwayat:** Pada `js/dashboard.js`, pembacaan data history dari Firebase diperbaiki. Sebelumnya, index data yang terlewat (bolong) menyebabkan Firebase mengembalikan data dalam bentuk `Object` (bukan `Array`), sehingga merusak rendering tabel. Telah ditambahkan logika `Array.isArray(rows) ? rows : Object.values(rows || {})` untuk mem-parsing data dengan aman.
+
+### ✨ Peningkatan Fitur & UI (Upgrades)
+1. **Redesign Antarmuka (UI/UX) Keseluruhan:** Desain web telah di-upgrade secara masif menggunakan gaya modern **Claymorphism** dan **Glassmorphism**.
+   - Penggantian font dasar menjadi font modern **'Plus Jakarta Sans'**.
+   - Penambahan efek shadow (outer & inner shadows), gradien warna (gradient backgrounds), serta animasi *pulse* pada indikator online.
+   - Restrukturisasi file CSS secara total (`style.css`, `login.css`, `dashboard.css`) agar lebih rapi dan responsif.
+2. **Dynamic Chart Rendering:** Grafik sensor pada Dashboard (`sensorChart.js`) sekarang di-*generate* secara dinamis dari array riwayat terbaru di Firebase (mencocokkan waktu Suhu dan Kelembapan), bukan bergantung pada data statis dari `dummy.json` atau field statis.
+3. **Filter Tabel & Status Visual Dinamis:** Menambahkan fungsionalitas mem-filter tabel di halaman Riwayat berdasarkan jenis sensor. Tabel juga dilengkapi tambahan keterangan `tanggal` dan badge status dengan warna khusus (Normal/Warn/Error).
+4. **Daftar Aktivitas Real-time:** *Activity List* di Dashboard tidak lagi statis/hardcode, melainkan memuat informasi terbaru secara otomatis berdasarkan 3 log history terakhir dari Firebase.
+5. **Penambahan Dokumentasi:** Ditambahkan blok komentar JSDoc pada fungsi-fungsi utama di JavaScript untuk mempermudah pengembangan dan maintenance di kemudian hari.
+
+---
+
 ## 💻 Lisensi
 Proyek ini dibuat untuk keperluan Pendidikan dan Ujian Kompetensi Keahlian (Ujikom). 
 MIT License © 2026.
