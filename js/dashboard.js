@@ -109,38 +109,81 @@ function updateStats(data) {
   }
 }
 
+let currentHistory = [];
+
 function updateTable(rows) {
+  // Pastikan history berbentuk array (Firebase kadang mereturn object jika index bolong)
+  currentHistory = Array.isArray(rows) ? rows : Object.values(rows || {});
+  renderTable();
+}
+
+function renderTable() {
   const tbody = document.getElementById('dataTable') || document.getElementById('historyTable');
   const rowCount = document.getElementById('rowCount');
   
-  if (rowCount) rowCount.textContent = `${rows.length} entri`;
   if (!tbody) return;
   
   // Create a reversed copy so newest logs appear at the top
-  const reversedRows = rows.slice().reverse();
+  let displayRows = currentHistory.slice().reverse();
 
-  tbody.innerHTML = reversedRows.map(r => `
-    <tr>
-      <td>${r.waktu}</td>
-      <td>${r.sensor}</td>
-      <td>${r.nilai}</td>
-      <td><span class="badge-pill ${r.status === 'OK' ? 'ok' : r.status === 'WARN' ? 'warn' : 'err'}">${r.status}</span></td>
-    </tr>
-  `).join('');
+  // Terapkan filter jika ada di halaman Riwayat
+  const filterSensor = document.getElementById('filterSensor');
+  if (filterSensor) {
+    const val = filterSensor.value.toLowerCase();
+    if (val !== 'all') {
+      displayRows = displayRows.filter(r => {
+        if (!r.sensor) return false;
+        const s = r.sensor.toLowerCase();
+        if (val === 'dht22') return s === 'suhu' || s === 'kelembapan';
+        if (val === 'bmp280') return s === 'tekanan';
+        if (val === 'ldr') return s === 'cahaya';
+        return s.includes(val);
+      });
+    }
+  }
 
-  // Update Activity List (Top 4 latest)
+  // Batasi jumlah jika di Dashboard (yang menggunakan dataTable)
+  if (tbody.id === 'dataTable') {
+    displayRows = displayRows.slice(0, 3);
+  }
+
+  if (rowCount) rowCount.textContent = `${displayRows.length} entri`;
+
+  if (displayRows.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--muted)">Tidak ada data ditemukan</td></tr>';
+  } else {
+    tbody.innerHTML = displayRows.map(r => `
+      <tr>
+        <td>${r.waktu || '-'} <small style="color:var(--muted); font-size:11px">${r.tanggal || ''}</small></td>
+        <td><span style="text-transform: capitalize">${r.sensor || '-'}</span></td>
+        <td>${r.nilai || '-'}</td>
+        <td><span class="badge-pill ${r.status === 'OK' ? 'ok' : r.status === 'WARN' ? 'warn' : 'err'}">${r.status || 'ERR'}</span></td>
+      </tr>
+    `).join('');
+  }
+
+  // Update Activity List (Top 3 latest) - hanya ada di Dashboard
   const activityList = document.getElementById('activityList');
   if (activityList) {
-    if (reversedRows.length === 0) {
+    const rawReversed = currentHistory.slice().reverse();
+    if (rawReversed.length === 0) {
       activityList.innerHTML = '<li><small>Belum ada aktivitas</small></li>';
     } else {
-      activityList.innerHTML = reversedRows.slice(0, 4).map(r => {
+      activityList.innerHTML = rawReversed.slice(0, 3).map(r => {
         let dotClass = r.status === 'OK' ? 'online' : r.status === 'WARN' ? 'warn' : 'off';
         return `<li><span class="dot ${dotClass}"></span> ${r.sensor} ${r.nilai} <small>${r.waktu}</small></li>`;
       }).join('');
     }
   }
 }
+
+// Tambahkan event listener untuk filter dropdown (jika ada)
+document.addEventListener('DOMContentLoaded', () => {
+  const filterSensor = document.getElementById('filterSensor');
+  if (filterSensor) {
+    filterSensor.addEventListener('change', renderTable);
+  }
+});
 
 // Fallback ke dummy.json
 async function loadDummy() {
