@@ -483,22 +483,31 @@ canvas {
     z-index: 10;
   }
   .sidebar-brand {
-    justify-content: center;
-    margin-bottom: 16px;
+    justify-content: center !important;
+    margin-bottom: 24px !important;
   }
   .sidebar-nav {
-    flex-direction: row;
-    overflow-x: auto;
-    padding-bottom: 8px;
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    padding-bottom: 12px !important;
+    gap: 12px !important;
+    justify-content: flex-start;
   }
   .sidebar-nav::-webkit-scrollbar { height: 4px; }
   .sidebar-nav a {
-    white-space: nowrap;
-    padding: 10px 16px;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap !important;
+    padding: 12px 20px !important;
+    flex: 0 0 auto !important;
+    width: auto !important;
   }
   .app-shell { flex-direction: column; }
-  .main { margin-left: 0; width: 100%; padding: 16px; }
+  .main { margin-left: 0; width: 100%; padding: 16px; overflow-x: hidden; }
   .topbar { flex-direction: column; align-items: flex-start; gap: 15px; margin-bottom: 24px; }
-  .panel { padding: 20px; }
+  .panel { padding: 20px; margin-bottom: 20px; width: 100%; box-sizing: border-box; }
   .stat-card { padding: 20px; }
 }
