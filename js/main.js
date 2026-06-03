@@ -1,4 +1,11 @@
-// Utility: Inject HTML component ke dalam elemen berdasarkan ID
+/**
+ * Fungsi utilitas untuk memuat komponen HTML eksternal (contoh: navbar, footer) 
+ * lalu memasukkannya ke dalam div target (berdasarkan ID).
+ * Ini membantu modulasi file HTML agar terhindar dari duplikasi kode header/footer.
+ * 
+ * @param {string} id - ID dari div target untuk penampung HTML
+ * @param {string} file - Path dari file HTML sumber (contoh: 'components/navbar.html')
+ */
 async function loadComponent(id, file) {
   const el = document.getElementById(id);
   if (!el) return;

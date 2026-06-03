@@ -5,6 +5,11 @@ import {
   signOut
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
+/**
+ * auth.js
+ * Menangani logika autentikasi pengguna (Login & Logout) menggunakan Firebase Auth.
+ * Terhubung dengan elemen form login di login.html.
+ */
 const form = document.getElementById('loginForm');
 const message = document.getElementById('loginMessage');
 
@@ -37,6 +42,9 @@ onAuthStateChanged(auth, (user) => {
   }
 });
 
+/**
+ * Fungsi untuk mengeluarkan pengguna (logout) dan mengembalikan sesi ke login page.
+ */
 export async function logout() {
   await signOut(auth);
   window.location.href = 'login.html';

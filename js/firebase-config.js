@@ -1,3 +1,11 @@
+/**
+ * firebase-config.js
+ * File konfigurasi utama untuk inisialisasi Firebase App.
+ * Mengandung API Key, domain otentikasi, dan konfigurasi database.
+ * Di-import oleh file lain seperti dashboard.js dan auth.js untuk akses ke auth & db.
+ */
+
+// Import fungsi inisialisasi dari Firebase SDK
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getAuth } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 import { getDatabase } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
@@ -14,8 +22,19 @@ const firebaseConfig = {
   measurementId: "G-2X1SP175YC"
 };
 
+// Inisialisasi Firebase App menggunakan konfigurasi di atas
 const app = initializeApp(firebaseConfig);
+
+/**
+ * Instansiasi Firebase Authentication
+ * Digunakan untuk login/logout admin
+ */
 export const auth = getAuth(app);
+
+/**
+ * Instansiasi Firebase Realtime Database
+ * Digunakan untuk membaca/menulis data sensor & relay
+ */
 export const db = getDatabase(app);
 export const analytics = getAnalytics(app);
 export default app;

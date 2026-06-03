@@ -1,6 +1,12 @@
 // Sensor Chart Renderer
 // Menggunakan Chart.js (sudah di-load via CDN di dashboard.html)
 
+/**
+ * Merender atau memperbarui instance Chart.js (grafik garis).
+ * Jika tidak ada parameter yang di-passing, fungsi ini akan menggunakan array bawaan (fallback).
+ * 
+ * @param {Object} chartData - Objek berisi array labels, array suhu, dan array kelembapan
+ */
 window.renderChart = function (chartData) {
   const ctx = document.getElementById('sensorChart');
   if (!ctx) return;

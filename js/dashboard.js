@@ -69,6 +69,12 @@ onValue(sensorRef, (snapshot) => {
   if (window.populateSensorTable) window.populateSensorTable(data);
 }, () => loadDummy());
 
+/**
+ * Memperbarui angka statistik (Suhu, Kelembapan, Cahaya, Tekanan) di dashboard
+ * beserta teks indikator panah (naik/turun/normal).
+ * 
+ * @param {Object} data - Objek data sensor dari Firebase (mengandung properti suhu, cahaya, dll.)
+ */
 function updateStats(data) {
   // Suhu
   const suhu = data.suhu ?? '--';
@@ -111,12 +117,22 @@ function updateStats(data) {
 
 let currentHistory = [];
 
+/**
+ * Menerima array riwayat dari Firebase dan menyiapkannya untuk dirender.
+ * Jika Firebase mereturn objek (karena indeks array berlubang), maka akan dikonversi ke array.
+ * 
+ * @param {Array|Object} rows - Data histori log dari Firebase
+ */
 function updateTable(rows) {
   // Pastikan history berbentuk array (Firebase kadang mereturn object jika index bolong)
   currentHistory = Array.isArray(rows) ? rows : Object.values(rows || {});
   renderTable();
 }
 
+/**
+ * Merender tabel log riwayat dan daftar aktivitas terbaru ke dalam HTML.
+ * Fungsi ini juga menangani filter data jika pengguna berada di halaman Riwayat.
+ */
 function renderTable() {
   const tbody = document.getElementById('dataTable') || document.getElementById('historyTable');
   const rowCount = document.getElementById('rowCount');
@@ -186,6 +202,10 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Fallback ke dummy.json
+/**
+ * Memuat data dummy dari JSON lokal jika koneksi ke Firebase gagal atau kosong.
+ * Berfungsi sebagai fallback agar UI tidak kosong melompong.
+ */
 async function loadDummy() {
   try {
     const res = await fetch('data/dummy.json');

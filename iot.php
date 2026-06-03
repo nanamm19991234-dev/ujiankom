@@ -114,11 +114,13 @@ function sensorPath(string $name): string
         'cahaya' => '/sensor/cahaya',
         'light' => '/sensor/cahaya',
         'lux' => '/sensor/cahaya',
+        // Tambahkan mapping untuk relay jika dikontrol via REST
         'relay1' => '/relay/1',
         'relay2' => '/relay/2',
         'relay3' => '/relay/3',
         'relay4' => '/relay/4',
-        'uid' => '/sensor/uid',       // untuk NFC/RFID
+        // Support sensor tipe lain seperti NFC
+        'uid' => '/sensor/uid',       
         'rfid' => '/sensor/uid',
     ];
 
