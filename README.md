@@ -71,6 +71,7 @@ Aplikasi monitoring sensor (Suhu & Cahaya) dan kontrol Relay secara realtime ber
    define('FIREBASE_DB_URL', 'https://monitoring-iot-xxxx-default-rtdb.asia-southeast1.firebasedatabase.app');
    ```
 5. Buka **Command Prompt (CMD)** di Windows, ketik `ipconfig` dan tekan Enter.
+        **Terminal** di mac, ketik `ipconfig getifaddr en0` 
 6. Cari bagian **IPv4 Address** pada adapter WiFi Anda (contoh: `10.214.89.143` atau `192.168.1.10`). Catat IP ini untuk digunakan di micro:bit.
 7. Lakukan uji coba pengiriman data manual melalui browser dengan mengakses URL berikut (ganti IP dengan IP laptop Anda):
    * **Kirim Suhu 30°C:** `http://IP_LAPTOP_ANDA/monitoring-firebase/iot.php?data=suhu:30`
