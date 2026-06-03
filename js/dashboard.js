@@ -28,7 +28,44 @@ onValue(sensorRef, (snapshot) => {
   updateTable(data.history || []);
   // Teruskan ke chart
   window.__sensorData = data;
-  if (window.renderChart) window.renderChart(data.chart);
+
+  // Bangun data chart secara dinamis dari riwayat DB
+  const labels = [];
+  const suhuData = [];
+  const kelembapanData = [];
+  const grouped = {};
+
+  (data.history || []).forEach(r => {
+    if (r.sensor === 'Relay 1') return;
+    // Potong detik agar suhu & kelembapan yang dikirim berdekatan (beda 1-2 detik) masuk ke titik waktu yang sama
+    const timeKey = r.waktu.split(':').slice(0, 2).join(':'); 
+    if (!grouped[timeKey]) grouped[timeKey] = { suhu: null, kelembapan: null };
+    
+    if (r.sensor.toLowerCase() === 'suhu') {
+      grouped[timeKey].suhu = parseFloat(r.nilai);
+    } else if (r.sensor.toLowerCase() === 'kelembapan') {
+      grouped[timeKey].kelembapan = parseFloat(r.nilai);
+    }
+  });
+
+  let lastSuhu = data.suhu || 0;
+  let lastKel = data.kelembapan || 0;
+  
+  for (let timeKey in grouped) {
+    labels.push(timeKey);
+    if (grouped[timeKey].suhu !== null) lastSuhu = grouped[timeKey].suhu;
+    if (grouped[timeKey].kelembapan !== null) lastKel = grouped[timeKey].kelembapan;
+    suhuData.push(lastSuhu);
+    kelembapanData.push(lastKel);
+  }
+
+  const dynamicChart = {
+    labels: labels,
+    suhu: suhuData,
+    kelembapan: kelembapanData
+  };
+
+  if (window.renderChart) window.renderChart(dynamicChart);
   if (window.populateSensorTable) window.populateSensorTable(data);
 }, () => loadDummy());
 
@@ -113,7 +150,7 @@ async function loadDummy() {
     updateStats(data);
     updateTable(data.history || []);
     window.__sensorData = data;
-    if (window.renderChart) window.renderChart(data.chart);
+    if (window.renderChart && data.chart) window.renderChart(data.chart);
   } catch (e) {
     console.warn('Tidak bisa memuat data dummy:', e);
   }
